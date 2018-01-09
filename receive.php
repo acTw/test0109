@@ -4,8 +4,10 @@
  //產生回傳給line server的格式
  $sender_userid = $json_obj->events[0]->source->userId;
  $sender_txt = $json_obj->events[0]->message->text;
+ $sender_replyToken = $json_obj->events[0]->replyToken;
  $response = array (
-				"to" => $sender_userid,
+				//"to" => $sender_userid,
+	                        "reply" => $sender_replyToken,
 				"messages" => array (
 					array (
 						"type" => "text",
@@ -21,7 +23,8 @@
  //回傳給line server
  $header[] = "Content-Type: application/json";
  $header[] = "Authorization: Bearer n4mXmKnNpbr0dT9O+ftyI/eN2PdRydTcAPAoPlR3O18KvE0GFx7anI74jmjYIXCBqLPhf1fnfnI6bx+e33U6Phs7o7IcSuIOFE46MDKTftN+yKaYtwugqbsKdPBBj53jWvj3bfPttPweP9DGNaW9PQdB04t89/1O/w1cDnyilFU=";
- $ch = curl_init("https://api.line.me/v2/bot/message/push");                                                                      
+ //$ch = curl_init("https://api.line.me/v2/bot/message/push");
+$ch = curl_init("https://api.line.me/v2/bot/message/reply"); 
  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($response));                                                                  
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
