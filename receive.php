@@ -15,24 +15,11 @@ $sender_txt = "aaaa";
  $sender_replyToken = $json_obj->events[0]->replyToken;
  $line_server_url = 'https://api.line.me/v2/bot/message/push';
 
-$objID = $json_obj->events[0]->message->id;
-$url = 'https://api.line.me/v2/bot/message/'.$objID.'/content';
-$ch = curl_init($url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_HTTPHEADER,array(
-'Authorization: Bearer n4mXmKnNpbr0dT9O+ftyI/eN2PdRydTcAPAoPlR3O18KvE0GFx7anI74jmjYIXCBqLPhf1fnfnI6bx+e33U6Phs7o7IcSuIOFE46MDKTftN+yKaYtwugqbsKdPBBj53jWvj3bfPttPweP9DGNaW9PQdB04t89/1O/w1cDnyilFU='
-));				
-$json_content = curl_exec($ch);
-curl_close($ch);
 
-$imagefile = fopen($objID.".jpeg", "w+") or die("Unable to open file!"); //設定一個log.txt，用來印訊息
-fwrite($imagefile, $json_content); 
-fclose($imagefile);
 
 			
 
  //用sender_txt來分辨要發何種訊息
- /*
  switch ($sender_txt) {
     		case "push":
         		$response = array (
@@ -128,9 +115,23 @@ fclose($imagefile);
 				)
 			);
         		break;
+	 default:
+		$objID = $json_obj->events[0]->message->id;
+		$url = 'https://api.line.me/v2/bot/message/'.$objID.'/content';
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_HTTPHEADER,array(
+		'Authorization: Bearer n4mXmKnNpbr0dT9O+ftyI/eN2PdRydTcAPAoPlR3O18KvE0GFx7anI74jmjYIXCBqLPhf1fnfnI6bx+e33U6Phs7o7IcSuIOFE46MDKTftN+yKaYtwugqbsKdPBBj53jWvj3bfPttPweP9DGNaW9PQdB04t89/1O/w1cDnyilFU='
+		));				
+		$json_content = curl_exec($ch);
+		curl_close($ch);
+
+		$imagefile = fopen($objID.".jpeg", "w+") or die("Unable to open file!"); //設定一個log.txt，用來印訊息
+		fwrite($imagefile, $json_content); 
+		fclose($imagefile);
 		 
  }
-*/
+
 
  
  //回傳給line server
