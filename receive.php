@@ -5,6 +5,48 @@
  $sender_userid = $json_obj->events[0]->source->userId;
  $sender_txt = $json_obj->events[0]->message->text;
  $sender_replyToken = $json_obj->events[0]->replyToken;
+ $line_server_url = 'https://api.line.me/v2/bot/message/push';
+ //用sender_txt來分辨要發何種訊息
+ switch ($sender_txt) {
+    		case "push":
+        		$response = array (
+				"to" => $sender_userid,
+				//"replyToken" => $sender_replyToken,
+				"messages" => array (
+					array (
+						"type" => "text",
+						"text" => "Hello, YOU SAY ".$sender_txt
+					)
+				)
+			);
+        		break;
+    		case "reply":
+			$line_server_url = 'https://api.line.me/v2/bot/message/reply';
+        		$response = array (
+				"replyToken" => $sender_replyToken,
+				"messages" => array (
+					array (
+						"type" => "text",
+						"text" => "Hello, YOU SAY ".$sender_txt
+					)
+				)
+			);
+        		break;
+		case "image":
+			$line_server_url = 'https://api.line.me/v2/bot/message/reply';
+        		$response = array (
+				"replyToken" => $sender_replyToken,
+				"messages" => array (
+					array (
+						"type" => "image",
+						"originalContentUrl" => "https://www.w3schools.com/css/paris.jpg",
+						"previewImageUrl" => "https://www.nasa.gov/sites/default/themes/NASAPortal/images/feed.png"
+					)
+				)
+			);
+        		break;
+ }
+
  $response = array (
 	                        //"to" => $sender_userid,
 	                        "replyToken" => $sender_replyToken,
@@ -24,7 +66,8 @@
  $header[] = "Content-Type: application/json";
  $header[] = "Authorization: Bearer n4mXmKnNpbr0dT9O+ftyI/eN2PdRydTcAPAoPlR3O18KvE0GFx7anI74jmjYIXCBqLPhf1fnfnI6bx+e33U6Phs7o7IcSuIOFE46MDKTftN+yKaYtwugqbsKdPBBj53jWvj3bfPttPweP9DGNaW9PQdB04t89/1O/w1cDnyilFU=";
  //$ch = curl_init("https://api.line.me/v2/bot/message/push");
- $ch = curl_init("https://api.line.me/v2/bot/message/reply"); 
+ //$ch = curl_init("https://api.line.me/v2/bot/message/reply"); 
+ $ch = curl_init($line_server_url);
  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($response));                                                                  
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
