@@ -44,6 +44,34 @@
 				)
 			);
         		break;
+		 case "location":
+			$line_server_url = 'https://api.line.me/v2/bot/message/reply';
+        		$response = array (
+				"replyToken" => $sender_replyToken,
+				"messages" => array (
+					array (
+						"type" => "location",
+						"title" => "my location",
+						"address" => "〒150-0002 東京都渋谷区渋谷２丁目２１−１",
+            					"latitude" => 35.65910807942215,
+						"longitude" => 139.70372892916203
+					)
+				)
+			);
+        		break;
+		 case "sticker":
+			$line_server_url = 'https://api.line.me/v2/bot/message/reply';
+        		$response = array (
+				"replyToken" => $sender_replyToken,
+				"messages" => array (
+					array (
+						"type" => "sticker",
+						"packageId" => "1",
+						"stickerId" => "1"
+					)
+				)
+			);
+        		break;
  }
 
 
