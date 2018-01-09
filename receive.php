@@ -6,7 +6,7 @@
  $sender_txt = $json_obj->events[0]->message->text;
  $sender_replyToken = $json_obj->events[0]->replyToken;
  $response = array (
-	                        "reply" => $sender_replyToken,
+	                        "replyToken" => $sender_replyToken,
 				"messages" => array (
 					array (
 						"type" => "text",
